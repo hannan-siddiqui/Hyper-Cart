@@ -15,12 +15,14 @@ export const metadata: Metadata = {
   description: "Admin dashboard to manage data",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
+    
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
@@ -33,5 +35,6 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
+
   );
 }
