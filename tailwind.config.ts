@@ -18,7 +18,13 @@ const config = {
       },
     },
     extend: {
+     
+       
       colors: {
+
+        'red-1': '#ff0000',
+          'grey-1': '#808080',
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

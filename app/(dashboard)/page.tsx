@@ -24,10 +24,6 @@ export default async function Home() {
   return (
     <div className="px-8 py-10 ">
       
-      <UserButton/>
-     
-
-
     </div>
   );
 }
