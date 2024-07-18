@@ -51,8 +51,11 @@ const CollectionForm = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("/app/api/collections", {
+      const res = await fetch("/api/collections", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       });
 
@@ -72,6 +75,8 @@ const CollectionForm = () => {
       setLoading(false);
     }
   };
+
+
 
   return (
     <div className="p-10">

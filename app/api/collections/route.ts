@@ -1,9 +1,9 @@
-
 // import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 import Collection from "@/lib/models/Collection";
-// import   { connectToDB }  from "@/lib/mongoDB";
+import { connectToDB } from "@/lib/mongoDB";
+
 
 
 export const POST = async (req: NextRequest) => {
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     //   return new NextResponse("Unauthorized", { status: 403 })
     // }
 
-  //  await connectToDB();
+   await connectToDB();
 
     const { title, description, image } = await req.json()
 
@@ -45,17 +45,3 @@ export const POST = async (req: NextRequest) => {
   }
 }
 
-// export const GET = async (req: NextRequest) => {
-//   try {
-//     await connectToDB()
-
-//     const collections = await Collection.find().sort({ createdAt: "desc" })
-
-//     return NextResponse.json(collections, { status: 200 })
-//   } catch (err) {
-//     console.log("[collections_GET]", err)
-//     return new NextResponse("Internal Server Error", { status: 500 })
-//   }
-// }
-
-// export const dynamic = "force-dynamic";
