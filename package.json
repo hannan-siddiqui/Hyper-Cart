@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@clerk/clerk-js": "^5.8.1",
-    "@clerk/nextjs": "^5.2.3",
+    "@clerk/nextjs": "^5.2.4",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-separator": "^1.1.0",

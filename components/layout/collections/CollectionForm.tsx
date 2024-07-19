@@ -24,6 +24,7 @@ import ImageUpload from "@/components/custom ui/ImageUpload";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
+
 const formSchema = z.object({
   title: z.string().min(2).max(20),
   description: z.string().min(2).max(500).trim(),
@@ -53,9 +54,6 @@ const CollectionForm = () => {
 
       const res = await fetch("/api/collections", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(values),
       });
 
@@ -75,8 +73,6 @@ const CollectionForm = () => {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="p-10">
