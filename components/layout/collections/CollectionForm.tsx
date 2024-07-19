@@ -74,6 +74,8 @@ const CollectionForm = () => {
     }
   };
 
+  
+
   return (
     <div className="p-10">
       <p className="font-extrabold text-2xl text-gray-800">Create Collection</p>
