@@ -1,34 +1,33 @@
-// import { auth } from "@clerk/nextjs";
+
 import { NextRequest, NextResponse } from "next/server";
 
 import Collection from "@/lib/models/Collection";
-import { connectToDB } from "@/lib/mongoDB";
-// import { connectToDB } from "@/lib/mongoDB";
+import connect from "@/lib/mongoDB";
 
 export const POST = async (req: NextRequest) => {
   console.log("POST request received");
 
   try {
-    const { userId } = auth();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 403 });
-    }
+    // const { userId } = auth();
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized", { status: 403 });
+    // }
 
     console.log("Connecting to MongoDB...");
-    await connectToDB();
+    await connect();
     console.log("MongoDB is connected bro");
 
     const { title, description, image } = await req.json();
     console.log("Request data parsed:", { title, description, image });
 
-    // const existingCollection = await Collection.findOne({ title });
+    const existingCollection = await Collection.findOne({ title });
     console.log("Checked for existing collection");
 
-    // if (existingCollection) {
-    //   console.log("Collection already exists:", existingCollection);
-    //   return new NextResponse("Collection already exists", { status: 400 });
-    // }
+    if (existingCollection) {
+      console.log("Collection already exists:", existingCollection);
+      return new NextResponse("Collection already exists", { status: 400 });
+    }
 
     if (!title || !image) {
       console.log("Title and image are required");
@@ -41,8 +40,6 @@ export const POST = async (req: NextRequest) => {
       image,
     });
 
-    
-
     await newCollection.save();
     console.log("New collection saved:", newCollection);
 
@@ -51,20 +48,22 @@ export const POST = async (req: NextRequest) => {
     console.log("collections_POST]", err);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
+  
 };
+
 
 export const GET = async (req: NextRequest) => {
   try {
-    
-    await connectToDB()
+    await connect();
 
-    const collections = await Collection.find()
+    const collections = await Collection.find();
+    console.log(collections);
 
     return NextResponse.json(collections, { status: 200 })
-  } catch (err) {
-    console.log("[collections_GET]", err)
-    return new NextResponse("Internal Server Error", { status: 500 })
-  }
-}
 
-export const dynamic = "force-dynamic";
+  } catch (error) {
+    console.log("[collections_GET]", error);
+   
+  }
+};
+

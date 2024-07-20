@@ -15,30 +15,17 @@ const Collections = () => {
 
   const [loading, setLoading] = useState(true);
   const [collections, setCollections] = useState([]);
+  const [error, setError] = useState(null);
 
   const getCollections = async () => {
-    try {
-      const res = await fetch("/api/collections", {
-        method: "GET",
-      });
-
-      console.log(res);
-      
-      const data = await res.json();
-      console.log(data);
-
-      setCollections(data);
-      setLoading(false);
-    } catch (err) {
-      console.log("[collections_GET]", err);
-    }
+    
   };
 
   useEffect(() => {
     getCollections();
   }, []);
 
-  return  (
+  return (
     <div className="px-10 py-5">
       <div className="flex items-center justify-between">
         <p className="text-heading2-bold">Collections</p>
@@ -47,8 +34,7 @@ const Collections = () => {
           Create Collection
         </Button> */}
       </div>
-      {/* <Separator className="bg-grey-1 my-4" />
-      <DataTable columns={columns} data={collections} searchKey="title" /> */}
+      
     </div>
   );
 };

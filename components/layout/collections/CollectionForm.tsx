@@ -38,12 +38,14 @@ const CollectionForm = () => {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
+
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
       image: "",
     },
+    
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -82,6 +84,7 @@ const CollectionForm = () => {
       <Separator className="bg-gray-500 mt-4 mb-7" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
           <FormField
             control={form.control}
             name="title"
@@ -95,6 +98,8 @@ const CollectionForm = () => {
               </FormItem>
             )}
           />
+
+
 
           <FormField
             control={form.control}
@@ -126,9 +131,10 @@ const CollectionForm = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> 
 
           <div className="flex gap-10">
+
             <Button type="submit" className="bg-blue-400 text-white" disabled={loading}>
               Submit
             </Button>
@@ -139,6 +145,7 @@ const CollectionForm = () => {
             >
               Discard
             </Button>
+
           </div>
         </form>
       </Form>

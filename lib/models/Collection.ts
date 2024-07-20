@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import {Schema, model, models} from "mongoose";
 
-const collectionSchema = new mongoose.Schema({
+const collectionSchema = new Schema({
 
   title: {
     type: String,
@@ -16,7 +16,7 @@ const collectionSchema = new mongoose.Schema({
 
   products: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Product",
     }
   ],
@@ -33,6 +33,6 @@ const collectionSchema = new mongoose.Schema({
   
 })
 
-const Collection = mongoose.models.Collection || mongoose.model("Collection", collectionSchema);
+const Collection = models.Collection || model("Collection", collectionSchema);
 
 export default Collection;

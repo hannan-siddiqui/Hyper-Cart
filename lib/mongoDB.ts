@@ -1,24 +1,34 @@
+
 import mongoose from "mongoose";
 
-let isConnected: boolean = false;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-export const connectToDB = async (): Promise<void> => {
-  mongoose.set("strictQuery", true)
+const connect = async ()=>{
+  const connectionState = mongoose.connection.readyState;
+     
+  if(connectionState ===1){
+    console.log("database connected");
+    return
+  }
 
-  if (isConnected) {
-    console.log("MongoDB is already connected");
+  if (connectionState===2) {
+    console.log("...connecting")
     return;
   }
 
-  try {
-    await mongoose.connect(process.env.MONGODB_URL || "", {
-      dbName: "hypercart"
-    })
-
-    isConnected = true;
-    console.log("MongoDB is connected");
-  } catch (err) {
-    console.log(err)
+  try{
+    mongoose.connect(MONGODB_URI!,{
+      dbName:"HYPERCART",
+      bufferCommands:false,
+    } )
+    console.log("database connected ...");
+    
+  } catch(error){
+    console.log(" error connecting databse", error);
+    throw new Error("error connecting databse")
   }
+
+
 }
 
+export default connect;
