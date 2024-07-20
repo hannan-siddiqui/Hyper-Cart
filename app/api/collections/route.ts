@@ -44,11 +44,12 @@ export const POST = async (req: NextRequest) => {
     console.log("New collection saved:", newCollection);
 
     return NextResponse.json(newCollection, { status: 200 });
+    
   } catch (err) {
     console.log("collections_POST]", err);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
-  
+
 };
 
 
@@ -57,7 +58,7 @@ export const GET = async (req: NextRequest) => {
     await connect();
 
     const collections = await Collection.find();
-    console.log(collections);
+
 
     return NextResponse.json(collections, { status: 200 })
 
