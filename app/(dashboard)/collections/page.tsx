@@ -8,11 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { columns } from "@/components/layout/collections/CollectionColumns";
 import { DataTable } from "@/components/custom ui/DataTable";
 
-// import { columns } from "@/components/collections/CollectionColumns";
-// import { DataTable } from "@/components/custom ui/DataTable";
-// import { Button } from "@/components/ui/button";
-// import { Separator } from "@/components/ui/separator";
-// import Loader from "@/components/custom ui/Loader";
+
+import Loader from "@/components/custom ui/Loader";
 
 const Collections = () => {
   const router = useRouter();
@@ -44,7 +41,7 @@ const Collections = () => {
 
 
 
-  return (
+  return loading?<Loader/>:(
     <div className="px-10 py-5">
     <div className="flex items-center justify-between">
       <p className="text-xl font-bold">Collections</p>

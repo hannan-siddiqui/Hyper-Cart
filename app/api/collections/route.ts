@@ -3,16 +3,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 import Collection from "@/lib/models/Collection";
 import connect from "@/lib/mongoDB";
+import { auth } from "@clerk/nextjs/server";
 
 export const POST = async (req: NextRequest) => {
   console.log("POST request received");
 
   try {
 
-    // const { userId } = auth();
-    // if (!userId) {
-    //   return new NextResponse("Unauthorized", { status: 403 });
-    // }
+    const { userId } = auth();
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 403 });
+    }
 
     console.log("Connecting to MongoDB...");
     await connect();
