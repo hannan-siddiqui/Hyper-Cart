@@ -12,7 +12,7 @@ type CollectionType = {
     description: string;
     media: [string];
     category: string;
-    // collections: [CollectionType];
+    collections: [CollectionType];
     tags: [string];
     sizes: [string];
     colors: [string];

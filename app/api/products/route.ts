@@ -2,13 +2,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-import Collection from "@/lib/models/Collection";
+
 import connect from "@/lib/mongoDB";
 import Product from "@/lib/models/Product";
-
+import Collection from "@/lib/models/Collection";
 
 export const POST = async (req: NextRequest) => {
   try {
+
     // const { userId } = auth();
 
     // if (!userId) {
@@ -22,7 +23,7 @@ export const POST = async (req: NextRequest) => {
       description,
       media,
       category,
-      // collections,
+      collections,
       tags,
       sizes,
       colors,
@@ -41,7 +42,7 @@ export const POST = async (req: NextRequest) => {
       description,
       media,
       category,
-      // collections,
+      collections,
       tags,
       sizes,
       colors,
@@ -51,16 +52,16 @@ export const POST = async (req: NextRequest) => {
 
     await newProduct.save();
 
+    if (collections) {
+      for (const collectionId of collections) {
+        const collection = await Collection.findById(collectionId);
+        if (collection) {
+          collection.products.push(newProduct._id);
+          await collection.save();
+        }
+      }
+    }
 
-    // if (collections) {
-    //   for (const collectionId of collections) {
-    //     const collection = await Collection.findById(collectionId);
-    //     if (collection) {
-    //       collection.products.push(newProduct._id);
-    //       await collection.save();
-    //     }
-    //   }
-    // }
 
     return NextResponse.json(newProduct, { status: 200 });
   } catch (err) {

@@ -1,13 +1,12 @@
 "use client";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
 
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "../ui/separator";
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -16,30 +15,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import ImageUpload from "@/components/custom ui/ImageUpload";
-import React, { useEffect, useState } from "react";
+import { Textarea } from "../ui/textarea";
+import ImageUpload from "../custom ui/ImageUpload";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Delete from "@/components/custom ui/Delete";
+import Delete from "../custom ui/Delete";
 import MultiText from "../custom ui/MultiText";
-import MUltiSelect from "../custom ui/MultiSelect";
-
-
-
-
-
-interface ProductFormProps {
-  initialData?: ProductType | null; //Must have "?" to make it optional
-}
+import MultiSelect from "../custom ui/MultiSelect";
+import Loader from "../custom ui/Loader";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
   description: z.string().min(2).max(500).trim(),
   media: z.array(z.string()),
   category: z.string(),
-  // collections: z.array(z.string()),
+  collections: z.array(z.string()),
   tags: z.array(z.string()),
   sizes: z.array(z.string()),
   colors: z.array(z.string()),
@@ -47,11 +38,14 @@ const formSchema = z.object({
   expense: z.coerce.number().min(0.1),
 });
 
-const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
+interface ProductFormProps {
+  initialData?: ProductType | null; //Must have "?" to make it optional
+}
 
+const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [collections, setCollections] = useState<CollectionType[]>([]);
 
   const getCollections = async () => {
@@ -60,99 +54,88 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
         method: "GET",
       });
       const data = await res.json();
-      setCollections(data || []); // Ensure data is an array
+      setCollections(data);
       setLoading(false);
     } catch (err) {
       console.log("[collections_GET]", err);
       toast.error("Something went wrong! Please try again.");
     }
   };
-  
+
   useEffect(() => {
     getCollections();
   }, []);
 
-
-
-
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver:zodResolver(formSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: initialData
-      ? initialData
+      ? {
+          ...initialData,
+          collections: initialData.collections.map(
+            (collection) => collection._id
+          ),
+        }
       : {
-        title: "",
-        description: "",
-        media: [],
-        category: "",
-        // collections: [],
-        tags: [],
-        sizes: [],
-        colors: [],
-        price: 0.1,
-        expense: 0.1,
+          title: "",
+          description: "",
+          media: [],
+          category: "",
+          collections: [],
+          tags: [],
+          sizes: [],
+          colors: [],
+          price: 0.1,
+          expense: 0.1,
         },
   });
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyPress = (
+    e:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     if (e.key === "Enter") {
       e.preventDefault();
     }
-  }
-
+  };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     try {
       setLoading(true);
-      const url = "/api/products"
-      // initialData
-      //   ? `/api/products/${initialData._id}`
-      //   : "/api/products";
-
-
+      const url = initialData
+        ? `/api/products/${initialData._id}`
+        : "/api/products";
       const res = await fetch(url, {
         method: "POST",
         body: JSON.stringify(values),
       });
-
       if (res.ok) {
         setLoading(false);
-        toast.success(`product ${initialData ? "updated" : "created"}`);
-        // window.location.href="/products";
+        toast.success(`Product ${initialData ? "updated" : "created"}`);
+        window.location.href = "/products";
         router.push("/products");
-        
-      } else {
-        const errorData = await res.json();
-        console.error("Failed to submit collection:", errorData.message);
-        toast.error("Failed to submit collection. Please try again.");
-        setLoading(false);
       }
     } catch (err) {
-      console.error("[products_POST]", err);
-      toast.error("Something went wrong bro! Please try again.");
-      setLoading(false);
+      console.log("[products_POST]", err);
+      toast.error("Something went wrong! Please try again.");
     }
   };
 
-  
-
-  return (
-
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">
-          <p className="text-ld font-bold ">Edit Product</p>
-          <Delete id={initialData._id} item="collection" />
+          <p className="text-heading2-bold">Edit Product</p>
+          <Delete id={initialData._id} item="product" />
         </div>
       ) : (
         <p className="text-heading2-bold">Create Product</p>
       )}
-
-      <Separator className="bg-gray-500 mt-4 mb-7" />
+      <Separator className="bg-grey-1 mt-4 mb-7" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
           <FormField
             control={form.control}
             name="title"
@@ -160,13 +143,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Title" {...field} />
+                  <Input
+                    placeholder="Title"
+                    {...field}
+                    onKeyDown={handleKeyPress}
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-1" />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
@@ -174,14 +160,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} rows={5} />
+                  <Textarea
+                    placeholder="Description"
+                    {...field}
+                    rows={5}
+                    onKeyDown={handleKeyPress}
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-1" />
               </FormItem>
             )}
           />
-
-            <FormField
+          <FormField
             control={form.control}
             name="media"
             render={({ field }) => (
@@ -203,8 +193,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             )}
           />
 
-<div className="md:grid md:grid-cols-3 gap-8">
-
+          <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="price"
@@ -280,8 +269,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
-
-            {/* {collections.length > 0 && (
+            {collections.length > 0 && (
               <FormField
                 control={form.control}
                 name="collections"
@@ -289,7 +277,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormItem>
                     <FormLabel>Collections</FormLabel>
                     <FormControl>
-                      <MUltiSelect
+                      <MultiSelect
                         placeholder="Collections"
                         collections={collections}
                         value={field.value}
@@ -309,8 +297,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   </FormItem>
                 )}
               />
-            )} */}
-
+            )}
             <FormField
               control={form.control}
               name="colors"
@@ -337,7 +324,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="sizes"
@@ -364,23 +350,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
-
           </div>
 
-
           <div className="flex gap-10">
-
-            <Button type="submit" className="bg-blue-400 text-white" disabled={loading}>
+            <Button type="submit" className="bg-blue-400 text-white">
               Submit
             </Button>
             <Button
               type="button"
-              onClick={() => router.push("/collections")}
+              onClick={() => router.push("/products")}
               className="bg-blue-400 text-white"
             >
               Discard
             </Button>
-
           </div>
         </form>
       </Form>
