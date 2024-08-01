@@ -42,17 +42,18 @@ const Collections = () => {
 
 
   return loading?<Loader/>:(
-    <div className="px-10 py-5">
+    <div className="px-10 py-5 text-neutral-500 bg-bg-[#0f0f0f] ">
     <div className="flex items-center justify-between">
-      <p className="text-xl font-bold">Collections</p>
-      <Button className="bg-blue-500 text-white" onClick={() => router.push("/collections/new")}>
+      <p className="text-2xl font-bold">Collections</p>
+      <Button className="bg-neutral-500 hover:bg-[#0f0f0f] text-white" onClick={() => router.push("/collections/new")}>
         <Plus className="h-4 w-4 mr-2 " />
         Create Collection
       </Button>
+      
     </div>
-    <Separator className="bg-grey-1 my-4" />
+    <Separator className="bg-grey-300 my-4" />
 
-    <DataTable columns={columns} data={collections} searchKey="title" />
+    <DataTable  columns={columns} data={collections} searchKey="title" />
 
   </div>
   );

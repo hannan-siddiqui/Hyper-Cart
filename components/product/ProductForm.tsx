@@ -133,7 +133,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       ) : (
         <p className="text-heading2-bold">Create Product</p>
       )}
-      <Separator className="bg-grey-1 mt-4 mb-7" />
+      <Separator className="bg-gray-200 mt-4 mb-7" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -171,6 +171,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="media"

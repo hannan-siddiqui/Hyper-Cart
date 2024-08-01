@@ -16,22 +16,22 @@ const TopBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="bg-white sticky top-0 z-20 w-full flex justify-between items-center px-8 py-4 bg-blue-2 shadow-xl lg:hidden">
-      <h1>Hyper-Cart</h1>
+    <div className="bg-[#323434] sticky top-0 z-20 w-full flex justify-between items-center px-8 py-4 bg-blue-2 shadow-xl lg:hidden">
+      <h1 className="text-red-600 font-medium text-lg">Hyper-Cart</h1>
 
       <div className="flex gap-8 max-md:hidden">
         {navLinks.map((link) => (
           <Link
             href={link.url}
             key={link.label}
-            className={`flex gap-4 text-body-medium ${pathname === link.url ? "text-blue-400" : "text-zinc-900"}`}
+            className={`flex gap-4 text-body-medium ${pathname === link.url ? "text-white" : "text-neutral-500"}`}
           >
             <p>{link.label}</p>
           </Link>
         ))}
       </div>
 
-      <div className="relative flex gap-4 items-center">
+      <div className="relative flex gap-4 items-center text-white">
         <Menu
           className="cursor-pointer md:hidden"
           onClick={() => setDropdownMenu(!dropdownMenu)}
@@ -42,7 +42,7 @@ const TopBar = () => {
               <Link
                 href={link.url}
                 key={link.label}
-                className="flex gap-4 text-body-medium"
+                className="flex gap-4 text-body-medium text-neutral-500"
               >
                 {link.icon} <p>{link.label}</p>
               </Link>

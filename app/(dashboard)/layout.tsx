@@ -26,9 +26,9 @@ export default function RootLayout({
     
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className= {inter.className}>
           <ToasterProvider />
-          <div className="flex max-lg:flex-col text-grey-300">
+          <div className="flex max-lg:flex-col text-grey-300 bg-[#121313]">
             <LeftSideBar />
             <TopBar />
             <div className="flex-1">{children} </div>

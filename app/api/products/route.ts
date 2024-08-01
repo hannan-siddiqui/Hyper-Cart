@@ -70,19 +70,19 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-// export const GET = async (req: NextRequest) => {
-//   try {
-//     await connect();
+export const GET = async (req: NextRequest) => {
+  try {
+    await connect();
 
-//     const products = await Product.find()
-//       .sort({ createdAt: "desc" })
-//       .populate({ path: "collections", model: Collection });
+    const products = await Product.find()
+      .sort({ createdAt: "desc" })
+      .populate({ path: "collections", model: Collection });
 
-//     return NextResponse.json(products, { status: 200 });
-//   } catch (err) {
-//     console.log("[products_GET]", err);
-//     return new NextResponse("Internal Error", { status: 500 });
-//   }
-// };
+    return NextResponse.json(products, { status: 200 });
+  } catch (err) {
+    console.log("[products_GET]", err);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+};
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
