@@ -17,7 +17,7 @@ const TopBar = () => {
 
   return (
     <div className="bg-[#323434] sticky top-0 z-20 w-full flex justify-between items-center px-8 py-4 bg-blue-2 shadow-xl lg:hidden">
-      <h1 className="text-red-600 font-medium text-lg">Hyper-Cart</h1>
+      <h1 className="text-red-600 font-extrabold text-lg">Hyper-Cart</h1>
 
       <div className="flex gap-8 max-md:hidden">
         {navLinks.map((link) => (
@@ -37,9 +37,10 @@ const TopBar = () => {
           onClick={() => setDropdownMenu(!dropdownMenu)}
         />
         {dropdownMenu && (
-          <div className="absolute top-10 right-6 flex flex-col gap-8 p-5 bg-white shadow-xl rounded-lg">
+          <div className="absolute top-10 right-6 flex flex-col gap-8 p-5 bg-[#121212] shadow-xl rounded-lg">
             {navLinks.map((link) => (
               <Link
+                onClick={() => setDropdownMenu(!dropdownMenu)}
                 href={link.url}
                 key={link.label}
                 className="flex gap-4 text-body-medium text-neutral-500"

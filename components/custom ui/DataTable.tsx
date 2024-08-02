@@ -57,7 +57,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm font-bold text-red-600 "
         />
       </div>
 
@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
               <TableRow  key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className="text-neutral-300 font-bold text-lg " key={header.id}>
+                    <TableHead className="text-neutral-200  font-bold text-lg " key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -88,7 +88,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 
-                <TableRow className="text-neutral-500 hover:bg-black hover:text-white hover:font-semibold"
+                <TableRow className="text-neutral-200 hover:bg-black hover:text-white hover:font-semibold"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

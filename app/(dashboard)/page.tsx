@@ -22,7 +22,7 @@ export default async function Home() {
   // const graphData = await getSalesPerMonth();
 
   return (
-    <div className="px-8 py-10 bg-[#323434] h-screen ">
+    <div className="px-8 py-10 bg-[#121212]  h-screen ">
       
     </div>
   );
