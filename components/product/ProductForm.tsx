@@ -127,21 +127,22 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">
-          <p className="text-heading2-bold">Edit Product</p>
+          <p className="text-white font-bold text-xl">Edit Product</p>
           <Delete id={initialData._id} item="product" />
         </div>
       ) : (
-        <p className="text-heading2-bold">Create Product</p>
+        <p className="text-white font-bold text-xl">Create Product</p>
       )}
       <Separator className="bg-gray-200 mt-4 mb-7" />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 text-black font-bold text-lg">
           <FormField
+          
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel className="text-white font-bold text-xl" >Title</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Title"
@@ -158,7 +159,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel className="text-white font-bold text-xl" >Description</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Description"
@@ -177,7 +178,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             name="media"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel className="text-white font-bold text-xl" >Image</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value}
@@ -200,7 +201,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl">Price ($)</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -218,7 +219,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="expense"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Expense ($)</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl">Expense ($)</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -236,7 +237,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl" >Category</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Category"
@@ -253,7 +254,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="tags"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tags</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl">Tags</FormLabel>
                   <FormControl>
                     <MultiText
                       placeholder="Tags"
@@ -276,7 +277,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 name="collections"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Collections</FormLabel>
+                    <FormLabel className="text-white font-bold text-xl">Collections</FormLabel>
                     <FormControl>
                       <MultiSelect
                         placeholder="Collections"
@@ -304,7 +305,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="colors"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Colors</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl">Colors</FormLabel>
                   <FormControl>
                     <MultiText
                       placeholder="Colors"
@@ -330,7 +331,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="sizes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sizes</FormLabel>
+                  <FormLabel className="text-white font-bold text-xl">Sizes</FormLabel>
                   <FormControl>
                     <MultiText
                       placeholder="Sizes"

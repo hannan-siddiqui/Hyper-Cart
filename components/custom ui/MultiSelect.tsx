@@ -50,7 +50,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   console.log(placeholder);
 
   return (
-    <Command className="overflow-visible bg-white">
+    <Command className="overflow-visible bg-white z-10">
       <div className="flex gap-1 flex-wrap border rounded-md">
         {selected.map((collection) => (
           <Badge key={collection._id}>
@@ -70,7 +70,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
         />
       </div>
 
-      <div className="relative mt-2">
+      <div className="relative mt-2 bg-white">
         {open && (
           <CommandGroup className="absolute w-full z-30 top-0 overflow-auto border rounded-md shadow-md">
             {selectables.map((collection) => (
@@ -81,7 +81,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
                   onChange(collection._id);
                   setInputValue("");
                 }}
-                className="hover:bg-grey-2 cursor-pointer"
+                className="bg-white hover:bg-gray-500 mb-2 cursor-pointer"
               >
                 {collection.title}
               </CommandItem>

@@ -99,22 +99,23 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">
-          <p className="text-ld font-bold ">Edit Collection</p>
+          <p className="font-extrabold text-white text-3xl ">Edit Collection</p>
           <Delete id={initialData._id} item="collection" /> 
         </div>
       ) : (
-        <p className="text-heading2-bold">Create Collection</p>
+        <p className="font-extrabold text-white text-3xl">Create Collection</p>
       )}
       <Separator className="bg-gray-500 mt-4 mb-7" />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8   text-black font-bold text-xl">
 
           <FormField
+          
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel  className="text-white font-bold text-xl" >Title</FormLabel>
                 <FormControl>
                   <Input placeholder="Title" {...field} />
                 </FormControl>
@@ -130,7 +131,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel className="text-white font-bold text-xl" >Description</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Description" {...field} rows={5} />
                 </FormControl>
@@ -144,7 +145,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
             name="image"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel className="text-white font-bold text-xl">Image</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
